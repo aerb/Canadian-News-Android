@@ -1,0 +1,32 @@
+//    		if(i == 0) Debug.startMethodTracing("calc", 100000000);
+    		
+//			URL url;
+//			URLConnection conn = null;
+//			
+//			try {
+//				url = new URL(n.get_link());
+//				conn = url.openConnection();
+//			} catch (MalformedURLException e) {
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+
+//		    HtmlCleaner cleaner = new HtmlCleaner();
+//		    CleanerProperties props = cleaner.getProperties();
+//		    props.setAllowHtmlInsideAttributes(true);
+//		    props.setAllowMultiWordAttributes(true);
+//		    props.setRecognizeUnicodeChars(true);
+//		    props.setOmitComments(true);
+//		    TagNode root = null;
+//		    
+//		    Object[] img = null;
+//		
+//		    try {
+//		    	root = cleaner.clean(new InputStreamReader(conn.getInputStream()));
+//		    	img = root.evaluateXPath(query);
+//		    } catch (IOException e) {
+//				e.printStackTrace();
+//			} catch (XPatherException e) {
+//				e.printStackTrace();
+//			}
