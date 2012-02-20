@@ -1,16 +1,12 @@
 package com.tastyfish.news;
 
-import java.util.ArrayList;
-
 import com.viewpagerindicator.TitleProvider;
 
-import android.graphics.Color;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
 
 class NewsPagerAdapter extends PagerAdapter implements TitleProvider{
 
