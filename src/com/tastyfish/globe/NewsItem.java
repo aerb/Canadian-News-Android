@@ -17,12 +17,13 @@ public class NewsItem {
 	private String _image;
 	private String _link;
 	private Bitmap _bmp;
-	
-	public NewsItem(){
-		
+
+	public NewsItem() {
+
 	}
-	
-	public NewsItem(String title, String brief, String author, String written, String image, String link, Bitmap bmp){
+
+	public NewsItem(String title, String brief, String author, String written,
+			String image, String link, Bitmap bmp) {
 		set_title(title);
 		set_brief(brief);
 		set_author(author);
@@ -31,16 +32,10 @@ public class NewsItem {
 		set_link(link);
 		set_bmp(bmp);
 	}
-	
-	public NewsItem copy(){
-		NewsItem n = new NewsItem(
-				this._title,
-				this._brief,
-				this._author,
-				this._written,
-				this._image,
-				this._link,
-				this._bmp);
+
+	public NewsItem copy() {
+		NewsItem n = new NewsItem(this._title, this._brief, this._author,
+				this._written, this._image, this._link, this._bmp);
 		return n;
 	}
 
@@ -73,13 +68,18 @@ public class NewsItem {
 	}
 
 	public void set_written(String date) {
-		SimpleDateFormat df = new SimpleDateFormat("EEE, d MMM yyyy HH:mm Z"); 
+		SimpleDateFormat df = new SimpleDateFormat("EEE, d MMM yyyy HH:mm Z");
 		try {
 			Date written = df.parse(date);
 			Date current = new Date();
-			long Diff = (current.getTime() - written.getTime())/(1000*60*60);
-			this._written = String.valueOf(Diff);
-			this._written += Diff == 1 ? " hour ago" : " hours ago";
+			long Diff = (current.getTime() - written.getTime())
+					/ (1000 * 60 * 60);
+			if (Diff < 1)
+				this._written = "";
+			else {
+				this._written = String.valueOf(Diff);
+				this._written += Diff == 1 ? " hour ago" : " hours ago";
+			}
 		} catch (ParseException e) {
 			this._written = "";
 			e.printStackTrace();
@@ -109,5 +109,5 @@ public class NewsItem {
 	public void set_bmp(Bitmap _bmp) {
 		this._bmp = _bmp;
 	}
-	
+
 }

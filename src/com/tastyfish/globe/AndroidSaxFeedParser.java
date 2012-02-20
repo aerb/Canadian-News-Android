@@ -10,11 +10,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.htmlcleaner.CleanerProperties;
-import org.htmlcleaner.HtmlCleaner;
-import org.htmlcleaner.TagNode;
-import org.htmlcleaner.XPather;
-import org.htmlcleaner.XPatherException;
 import org.xml.sax.SAXException;
 
 import android.graphics.Bitmap;

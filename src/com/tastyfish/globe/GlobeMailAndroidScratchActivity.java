@@ -2,31 +2,21 @@ package com.tastyfish.globe;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Stack;
 
-import org.htmlcleaner.CleanerProperties;
-import org.htmlcleaner.HtmlCleaner;
-import org.htmlcleaner.TagNode;
-import org.htmlcleaner.XPatherException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.viewpagerindicator.TabPageIndicator;
-import com.viewpagerindicator.TitlePageIndicator;
 
-import android.app.ListActivity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -34,7 +24,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Debug;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
@@ -43,9 +32,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 class NewsBundle{
 	ViewPager pager;
@@ -129,7 +116,7 @@ public class GlobeMailAndroidScratchActivity extends Activity {
 	    		public void run() {
 	    			loadFeed(0,"http://www.theglobeandmail.com/news/national/?service=rss", "National");
 	    			loadFeed(1,"http://www.theglobeandmail.com/news/politics/?service=rss", "Politics");
-	    			loadFeed(2,"http://www.theglobeandmail.com/report-on-business/?service=rss", "Buisness");
+	    			loadFeed(2,"http://www.theglobeandmail.com/report-on-business/?service=rss", "Business");
 	    			loadFeed(3,"http://www.theglobeandmail.com/news/world/?service=rss", "World");
 	    			loadFeed(4,"http://www.theglobeandmail.com/news/technology/?service=rss", "Tech");
 	    			loadFeed(5,"http://www.theglobeandmail.com/news/arts/?service=rss", "Art");
@@ -287,9 +274,10 @@ public class GlobeMailAndroidScratchActivity extends Activity {
     public void loadImages(NewsItem n){  	
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(n.get_link()).get();
+			String link = n.get_link().replaceFirst("www.", "m.");
+			doc = Jsoup.connect(link).get();
 		}catch (SocketTimeoutException e){
-			e.printStackTrace();
+			System.out.println("Timeout at: " + n.get_link());
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -328,12 +316,10 @@ public class GlobeMailAndroidScratchActivity extends Activity {
     	super.onPause();
     }
     
-    
     @Override
     public void onDestroy(){
     	super.onDestroy();
     }
-    
     
     @Override
     public Object onRetainNonConfigurationInstance() {
