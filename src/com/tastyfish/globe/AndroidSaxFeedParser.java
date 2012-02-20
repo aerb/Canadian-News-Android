@@ -90,11 +90,13 @@ public class AndroidSaxFeedParser{
 		try {
 			Xml.parse(this.getInputStream(), Xml.Encoding.UTF_8, root.getContentHandler());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
+			System.out.println(feedUrl);		
+		} catch (SAXException e) {	
 			e.printStackTrace();
+			System.out.println(feedUrl);		
+		} catch (Exception e) {
+			System.out.println(feedUrl);			
 		}
 
 		return messages;

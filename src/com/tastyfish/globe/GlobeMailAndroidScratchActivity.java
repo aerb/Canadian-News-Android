@@ -56,7 +56,6 @@ class NewsBundle{
 	ArrayList<ListView> newsListView;
 	TabPageIndicator tabPageIndicator;
 	ArrayList<String> titles;
-	
 }
 
 public class GlobeMailAndroidScratchActivity extends Activity {
@@ -100,16 +99,16 @@ public class GlobeMailAndroidScratchActivity extends Activity {
         if (data == null){
         	newsItems = new ArrayList<List<NewsItem>>();
         	titles = new ArrayList<String>();
-    		for(int i = 0; i < 8; ++i) 
+    		for(int i = 0; i < 7; ++i) 
     			titles.add("");
         	
-	        for(int i = 0 ; i < 8; ++i) 
+	        for(int i = 0 ; i < 7; ++i) 
 	        	newsItems.add(new ArrayList<NewsItem>());
-	        newsLoaded = new boolean[8];
+	        newsLoaded = new boolean[7];
         
         
 	        newsListView = new ArrayList<ListView>();
-	    	for(int i = 0; i < 8; ++i){
+	    	for(int i = 0; i < 7; ++i){
 	    		newsListView.add(new ListView(this));
 	        	NewsAdapter aa = new NewsAdapter(this, R.layout.row, newsItems.get(i));
 	        	newsListView.get(i).setAdapter(aa);
@@ -128,14 +127,13 @@ public class GlobeMailAndroidScratchActivity extends Activity {
 	    	dialog = ProgressDialog.show(this , "", "Loading...", true);
 	    	Thread feedThread = new Thread(new Runnable(){
 	    		public void run() {
-	    			loadFeed(0,"http://www.theglobeandmail.com/?service=rss&feed=topstories", "Top Stories");
-	    			loadFeed(1,"http://www.theglobeandmail.com/news/national/?service=rss", "National");
-	    			loadFeed(2,"http://www.theglobeandmail.com/news/politics/?service=rss", "Politics");
-	    			loadFeed(3,"http://www.theglobeandmail.com/report-on-business/?service=rss", "Buisness");
-	    			loadFeed(4,"http://www.theglobeandmail.com/news/world/?service=rss", "World");
-	    			loadFeed(5,"http://www.theglobeandmail.com/news/technology/?service=rss", "Tech");
-	    			loadFeed(6,"http://www.theglobeandmail.com/news/arts/?service=rss", "Art");
-	    			loadFeed(7,"http://www.theglobeandmail.com/sports/?service=rss", "Sports");
+	    			loadFeed(0,"http://www.theglobeandmail.com/news/national/?service=rss", "National");
+	    			loadFeed(1,"http://www.theglobeandmail.com/news/politics/?service=rss", "Politics");
+	    			loadFeed(2,"http://www.theglobeandmail.com/report-on-business/?service=rss", "Buisness");
+	    			loadFeed(3,"http://www.theglobeandmail.com/news/world/?service=rss", "World");
+	    			loadFeed(4,"http://www.theglobeandmail.com/news/technology/?service=rss", "Tech");
+	    			loadFeed(5,"http://www.theglobeandmail.com/news/arts/?service=rss", "Art");
+	    			loadFeed(6,"http://www.theglobeandmail.com/sports/?service=rss", "Sports");
 	    			dialog.dismiss();
 	    			handler.sendEmptyMessage(2);
 	    			handler.sendEmptyMessage(1);
@@ -151,7 +149,7 @@ public class GlobeMailAndroidScratchActivity extends Activity {
             this.titles = data.titles;
             
 	        newsListView = new ArrayList<ListView>();
-	    	for(int i = 0; i < 8; ++i){
+	    	for(int i = 0; i < 7; ++i){
 	    		newsListView.add(new ListView(this));
 	        	NewsAdapter aa = new NewsAdapter(this, R.layout.row, newsItems.get(i));
 	        	newsListView.get(i).setAdapter(aa);
@@ -232,9 +230,8 @@ public class GlobeMailAndroidScratchActivity extends Activity {
     		switch(msg.what){
     		case 1:
     			pagerAdapter.notifyDataSetChanged();
-    			((NewsAdapter)newsListView.get(currentIndex).getAdapter()).notifyDataSetChanged();
-//    			for(ListView l : newsListView)
-//    				((NewsAdapter)l.getAdapter()).notifyDataSetChanged();
+    			for(ListView l : newsListView)
+    				((NewsAdapter)l.getAdapter()).notifyDataSetChanged();
     			break;
     		case 2:
     			tabPageIndicator.notifyDataSetChanged();
@@ -287,22 +284,18 @@ public class GlobeMailAndroidScratchActivity extends Activity {
 		}
 	};
     
-    public void loadImages(NewsItem n){    	
+    public void loadImages(NewsItem n){  	
 		Document doc = null;
 		try {
 			doc = Jsoup.connect(n.get_link()).get();
 		}catch (SocketTimeoutException e){
-			try {
-				doc = Jsoup.connect(n.get_link()).get();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			e.printStackTrace();
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		Element masthead = doc != null ? doc.select("div.articleleadphoto").first() : null;
+		Element masthead = doc != null ? doc.select("div.leadImage").first() : null;
 		Elements imgs =  masthead != null?masthead.select("img") : null;
 		Element img = null;
 		if (imgs != null) 
