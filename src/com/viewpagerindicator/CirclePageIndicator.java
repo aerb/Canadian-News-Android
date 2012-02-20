@@ -16,7 +16,7 @@
  */
 package com.viewpagerindicator;
 
-import com.tastyfish.globe.R;
+import com.tastyfish.news.R;
 
 import android.content.Context;
 import android.content.res.Resources;
